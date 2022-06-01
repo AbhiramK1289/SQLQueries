@@ -1,0 +1,117 @@
+create  table customer(cos_id,cos_name varchar(20));
+insert into customer values(13,'raju');
+insert into customer values(11,'krish');
+
+create or replace procedure customer200 (id number) as newid number;
+begin
+update customer set id=40  where name='raju';
+end;
+
+
+create table product (pro_id ,pro_name varchar(20),pro_prize float,pro_quantity);
+insert into product values(123,'nayab',1456,6);
+
+
+
+
+
+
+select * from product;
+truncate table product;
+
+
+create or replace function product
+return number
+as
+totalprice number(10):=0;
+begin
+select (pro_prize*pro_quantity) into totalprice from product where id=123;
+return totalprice;
+end;
+
+
+
+declare
+sol number(10);
+begin
+p:=product();
+dbms_output.put_line('total price: ' || sol);
+end;
+
+
+create or replace function product
+return number
+as
+totalpricewithdiscount number(10):=0;
+begin
+select (pro_price*pro_quantity-pro_price*pro_quantity*0.05) into totalpricediscount from product where id=2;
+return totalpricediscount;
+end;
+
+
+
+declare
+sol number(10);
+begin
+p:=product();
+dbms_output.put_line('total price: ' || sol);
+end;
+
+
+alter table product add(totalprice float ,tpwithdiscount float);
+select *from product;
+update  product set totalprice=500 where id=123;
+update  product set tpwithdiscount=475 where id=123;
+update  product set totalprice=2040 where id=452;
+update  product set tpwithdiscount=1938 where id=452;
+select *from product;
+
+
+alter table customer add primary key(cos_ID);
+
+
+CREATE TABLE Orderss (
+    Or_ID int NOT NULL unique ,
+    Or_Number int NOT NULL,
+    or_personnumber int primary key
+);
+
+insert into orderss values(1,123,12);
+CREATE TABLE persons (
+    personID int primary key ,
+    serialNumber int NOT NULL,
+    or_personnumber int,foreign key(personnumber) references orders56(personnumber)
+);
+
+
+
+declare
+sol number(10)=&an;
+begin
+if mod(sol number(10))
+dbms_output.put_line('even number')
+end;
+
+
+
+DECLARE
+    n NUMBER := &in;
+    r NUMBER;
+BEGIN
+    IF MOD(n, 2)= 0 THEN
+      dbms_output.Put_line('Even');
+    ELSE
+      dbms_output.Put_line('Odd');
+    END IF;
+END;
+
+
+
+
+CREATE TABLE Ordersss (
+    OrderID int NOT NULL unique ,
+    OrderNumber int NOT NULL,
+    personage int check(personage>30)
+);
+
+insert into orders546 values (1,23,56)
