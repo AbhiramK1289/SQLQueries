@@ -1,0 +1,82 @@
+create  table customer25 (id number,name varchar(20));
+insert into customer25 values(12,'df');
+insert into customer25 values(13,'ef');
+create or replace procedure customer200 (id number) as newid number;
+begin 
+update customer25 set id=600  where name='df';
+end;
+
+
+create table product26 (id number ,productname varchar(20),price float,quantity number);
+insert into product26 values(2,'asdf',1020,2);
+
+
+
+
+
+
+select * from product26;
+truncate table product26;
+
+
+create or replace function product 
+return number
+as 
+totalprice number(10):=0;
+begin
+select (price*quantity) into totalprice from product26 where id=2;
+return totalprice;
+end;
+
+
+
+declare
+p number(10);
+begin 
+p:=product();
+dbms_output.put_line('total price: ' || p);
+end;
+
+
+create or replace function product46 
+return number
+as 
+totalpricewithdiscount number(10):=0;
+begin
+select (price*quantity-price*quantity*0.05) into totalpricewithdiscount from product26 where id=2;
+return totalpricewithdiscount;
+end;
+
+
+
+declare
+p number(10);
+begin 
+p:=product46();
+dbms_output.put_line('total price: ' || p);
+end;
+
+
+alter table product26 add(totalprice float ,tpwithdiscount float);
+select *from product26;
+update  product26 set totalprice=500 where id=1;
+update  product26 set tpwithdiscount=475 where id=1;
+update  product26 set totalprice=2040 where id=2;
+update  product26 set tpwithdiscount=1938 where id=2;
+select *from product26;
+
+
+alter table customer2 add primary key(ID); 
+
+
+CREATE TABLE Orders56 (
+    OrderID int NOT NULL unique ,
+    OrderNumber int NOT NULL,
+    personnumber int primary key
+);
+insert into orders56 values(1,123,12);
+CREATE TABLE persons56 (
+    personID int primary key ,
+    serialNumber int NOT NULL,
+    personnumber int,foreign key(personnumber) references orders56(personnumber)
+);
