@@ -1,0 +1,79 @@
+Try it nowAsk again laterDon't show again
+create  table customer1 (id number,name varchar(20));
+insert into customer1 values(1,'bhanu');
+insert into customer1 values(2,'ajith');
+
+
+
+create table product1(id number ,productname varchar(20),price float,quantity number);
+insert into product1 values(2,'mobile',1020,2);
+
+
+
+
+
+
+select * from product1;
+truncate table product1;
+
+
+create or replace function product 
+return number
+as 
+totalprice number(10):=0;
+begin
+select (price*quantity) into totalprice from product1 where id=2;
+return totalprice;
+end;
+
+
+
+declare
+p number(10);
+begin 
+p:=product();
+dbms_output.put_line('total price: ' || p);
+end;
+
+
+create or replace function productsbill 
+return number
+as 
+totalpricewithdiscount number(10):=0;
+begin
+select (price*quantity-price*quantity*0.05) into totalpricewithdiscount from product where id=2;
+return totalpricewithdiscount;
+end;
+
+
+
+declare
+p number(10);
+begin 
+p:=productbill();
+dbms_output.put_line('total price: ' || p);
+end;
+
+
+alter table products add(totalprice float ,tpwithdiscount float);
+select *from products;
+update  products set totalprice=500 where id=1;
+update  products set tpwithdiscount=475 where id=1;
+update  products set totalprice=2040 where id=2;
+update  products set tpwithdiscount=1938 where id=2;
+select *from products;
+
+
+
+
+CREATE TABLE Orders(
+    OrderID int NOT NULL unique ,
+    OrderNumber int NOT NULL,
+    personnumber int primary key
+);
+insert into orders values(1,123,12);
+CREATE TABLE persons (
+    personID int primary key ,
+    serialNumber int NOT NULL,
+    personnumber int,foreign key(personnumber) references orders56(personnumber)
+);
