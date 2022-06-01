@@ -1,0 +1,44 @@
+create table product(productId number, productName varchar2(50),productPrice number, productQuantity number);
+
+insert into product values(201,'laptop',25000,2);
+insert into product values(202,'smartphone',10000,3);
+insert into product values(203,'earphones',500,5);
+insert into product values(204,'keyboard',1500,3);
+insert into product values(205,'mouse',600,4);
+insert into product values(206,'modem',1000,3);
+insert into product values(207,'cpu',7500,2);
+insert into product values(208,'soundbar',7000,6);
+insert into product values(209,'harddisk',4500,2);
+insert into product values(210,'pendrive',700,4);
+
+
+create or replace function TotalPrice
+return number IS
+total number(8):=0;
+begin
+select (productPrice*productQuantity) into total from product where productId=206;
+return total;
+end;
+
+DECLARE
+total_price number;
+begin
+total_price :=TotalPrice();
+dbms_output.put_line('Total price is: '||total_price);
+end;
+
+create or replace function discount
+return number IS
+total number(8):=0;
+begin
+select (productPrice*productQuantity*0.90) into total from product where productId=206;
+return total;
+end;
+
+
+DECLARE
+total_price number;
+begin
+total_price := discount();
+dbms_output.put_line('Total price by the discount is: '||total_price);
+end;
