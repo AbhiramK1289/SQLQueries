@@ -1,0 +1,87 @@
+create  table customer(id number,name varchar(20));
+insert into customer values(12,'jai');
+insert into customer values(13,'jai');
+create or replace procedure customer200 (id number) as newID number;
+begin
+update customer set id=600  where name='jai';
+end;
+
+create table product90 (id number ,productname varchar(20),price float,quantity number);
+insert into product90 values(2,'jai',1020,2);
+
+
+
+select * from product90;
+truncate table product90;
+
+
+
+
+create or replace function product56
+return number
+as
+totalprice number(10):=0;
+begin
+select (price*quantity) into totalprice from product90 where id=2;
+return totalprice;
+end;
+
+
+
+
+create or replace function product77
+return number
+as
+total_price_with_discount number(10):=0;
+begin
+select (price*quantity-price*quantity*0.05) into total_price_with_discount  from product90 where id=2;
+returntotal_price_with_discount ;
+end;
+
+
+alter table product90 add(totalprice float ,tpwithdiscount float);
+select *from product90;
+update   product90 set totalprice=500 where id=1;
+update   product90 set tpwithdiscount=475 where id=1;
+update  product90 set totalprice=2040 where id=2;
+update  product90 set tpwithdiscount=1938 where id=2;
+select *from  product90;
+
+
+
+CREATE TABLE Orders12 (
+    OrderID int NOT NULL unique ,
+    OrderNumber int NOT NULL,
+    personnumber int primary key
+);
+insert into orders12 values(1,123,12);
+CREATE TABLE persons12 (
+    personID int primary key ,
+    serialNumber int NOT NULL,
+    personnumber int,foreign key(personnumber) references orders12(personnumber)
+);
+
+
+
+
+
+DECLARE
+    n NUMBER := &in;
+    r NUMBER;
+BEGIN
+    IF MOD(n, 2)= 0 THEN
+      dbms_output.Put_line('Even');
+    ELSE
+      dbms_output.Put_line('Odd');
+    END IF;
+END;
+
+
+
+
+CREATE TABLE Orders546 (
+    OrderID int NOT NULL unique ,
+    OrderNumber int NOT NULL,
+    personage int check(personage>30)
+);
+insert into orders546 values (1,23,56)
