@@ -1,0 +1,92 @@
+
+PRODUCT TABLE:
+-----------------------
+
+CREATE TABLE PRODUCT(P_ID NUMBER PRIMARY KEY, P_NAME VARCHAR2(20), PRICE NUMBER, QUANTITY NUMBER);
+
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('951', 'CINTOLSOAP', '30', '6');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('952', 'FOGG', '150', '2');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('953', 'PARACHUTE', '75', '3');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('954', 'MAGGIE6IN1PACK', '70', '1');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('955', 'PEN', '10', '12');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('956', 'BOATHEADSET', '3000', '1');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('957', 'IRONMANTOY', '2000', '1');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('958', 'CELEBRATIONS', '600', '2');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('959', 'CLINICPLUSSHAMPOO', '2', '24');
+INSERT INTO PRODUCT (P_ID, P_NAME, PRICE, QUANTITY) VALUES ('960', 'NIKESHOES', '4000', '1');
+
+
+1.Finding the Total price for the product table by using function:
+-----------------------------------------------------------------------
+create or replace FUNCTION TOTAL_PRICE(TEMP IN NUMBER)
+RETURN NUMBER 
+IS 
+SOLUTION NUMBER := 0;
+BEGIN
+SELECT (PRICE*QUANTITY) INTO SOLUTION FROM PRODUCT WHERE P_ID = TEMP;
+RETURN SOLUTION;
+END;
+
+
+
+DECLARE
+   AMOUNT NUMBER;  
+BEGIN 
+   AMOUNT:=TOTAL_PRICE(957);
+   DBMS_OUTPUT.PUT_LINE('TOTAL PRICE  ' || AMOUNT);
+END;  
+
+
+=====================================================================================================================
+
+
+2. Finding the discount for the product table:
+----------------------------------------------------------------------
+create or replace FUNCTION SELLING_PRICE(TEMP IN NUMBER)
+RETURN NUMBER 
+IS 
+SOLUTION NUMBER := 0;
+BEGIN
+SELECT (PRICE*QUANTITY*0.9) INTO SOLUTION FROM PRODUCT WHERE P_ID = TEMP;
+RETURN SOLUTION;
+END;
+
+
+DECLARE
+   AMOUNT NUMBER;  
+BEGIN 
+   AMOUNT:=SELLING_PRICE(954);
+   DBMS_OUTPUT.PUT_LINE('SELLING PRICE WITH DISCOUNT 10% OFF IS ' || AMOUNT);
+END; 
+
+=====================================================================================================================
+
+
+3.  adding and deleting the constraints for existing tables:
+---------------------------------------------------------------------------------------------------------------
+CREATE TABLE CUSTOMER(C_ID NUMBER PRIMARY KEY, C_NAME VARCHAR2(20));
+
+
+
+CREATE TABLE ORDERS(O_ID NUMBER PRIMARY KEY, C_ID NUMBER, O_NAME VARCHAR2(20), ORDER_DATE DATE, PRICE NUMBER);
+
+SELECT C_ID,C_NAME FROM CUSTOMER;
+
+
+
+adding the foreign constraint:
+------------------------------------
+ALTER TABLE ORDERS
+ADD FOREIGN KEY (C_ID)  REFERENCES CUSTOMER(C_ID);
+
+
+deleting the foreign constraint:
+----------------------------------
+ALTER TABLE ORDERS
+DROP CONSTRAINT SYS_C0013329;
+
+
+
+check constraint:
+------------------
+CREATE TABLE ORDERS (O_ID NUMBER PRIMARY KEY, C_ID NUMBER, O_NAME VARCHAR2(20), ORDER_DATE DATE, PRICE NUMBER CHECK (PRICE>=5000));
