@@ -1,0 +1,50 @@
+1.
+create table product(name varchar(20),id int,quantity int);
+
+CREATE OR REPLACE FUNCTION PRODUCTS4
+RETURN NUMBER
+AS
+TOTALPRICE number:=0;
+BEGIN
+SELECT (PRICE*QUANTITY) INTO TOTALPRICE FROM PRODUCT WHERE ID=22;
+RETURN TOTALPRICE;
+END;
+
+
+DECLARE
+P NUMBER(20);
+BEGIN
+P:=PRODUCTS4();
+dbms_output.put_line('TOTAL PRICE ' || P);  
+END;  
+
+2.
+CREATE OR REPLACE FUNCTION PRODUCTS45
+RETURN NUMBER
+AS
+TOTALPRICE number:=0;
+BEGIN
+SELECT (PRICE*QUANTITY*0.9) INTO TOTALPRICE FROM PRODUCT WHERE ID=33;
+RETURN TOTALPRICE;
+END;
+
+
+DECLARE
+Q NUMBER(20);
+BEGIN
+Q:=PRODUCTS45();
+dbms_output.put_line('TOTAL PRICE ' || P);  
+END;  
+
+3.
+CREATE TABLE CUSTOMER(CID INT,NAME VARCHAR(20));
+
+CREATE TABLE ORDERS(OID INT,ONUMBER INT,ODATE DATE,CID INT);
+
+alter table customer add primary key(cid);
+
+alter table orders add primary key(oid);
+
+alter table orders add foreign key(cid) references customer(cid); 
+
+alter table orders add check(onumber>292789);
