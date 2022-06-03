@@ -1,0 +1,112 @@
+create table product(productId number, productName varchar2(50),productPrice number, productQuantity number);
+
+insert into product values(101,'laptop',25000,2);
+insert into product values(102,'smartphone',10000,3);
+insert into product values(103,'earphones',500,5);
+insert into product values(104,'keyboard',1500,3);
+insert into product values(105,'mouse',600,4);
+insert into product values(106,'modem',1000,3);
+insert into product values(107,'cpu',7500,2);
+insert into product values(108,'soundbar',7000,6);
+insert into product values(109,'harddisk',4500,2);
+insert into product values(110,'pendrive',700,4);
+
+
+select productId,productName,productPrice,productQuantity from product;
+
+select productPrice*productQuantity as TotalPrice from product;
+
+select productName,productPrice*productQuantity as TotalPrice from product where productId=106;
+
+
+alter table product add sellingprice number(10);
+
+====================================================================
+
+1st Query= Functions ( gettng total price)
+
+
+create or replace function TotalPrice
+return number IS 
+total number(8):=0;
+begin
+select (productPrice*productQuantity) into total from product where productId=108;
+return total;
+end;
+
+
+Function Calling:
+
+DECLARE
+total_price number;
+begin
+total_price :=TotalPrice();
+dbms_output.put_line('Total price is: '||total_price);
+end;
+
+=========================================================================
+
+Query-2 (selling_price_after_Discount )
+---
+
+
+create or replace function SellingPriceDiscount
+return number IS 
+selling_price_afterDiscount number(8):=0;
+begin
+select (productPrice*productQuantity*0.90) into selling_price_afterDiscount from product where productId=106;
+return selling_price_afterDiscount;
+end;
+
+
+------------
+
+DECLARE
+selling_price number;
+begin
+selling_price :=SellingPriceDiscount();
+dbms_output.put_line('SellingPrice After Discount is: '||selling_price);
+end;
+
+
+
+=============================================================================
+
+Query-3 (Constraints)
+
+Customer Table Creation:-
+
+create table customer(customerId number(20) primary key,customerName varchar2(20),customerAddress varchar2(20));
+
+insert into customer values(221,'ajay','hyd');
+insert into customer values(222,'akhil','nzb');
+insert into customer values(223,'shiva','nzb');
+insert into customer values(224,'anvesh','warnagal');
+insert into customer values(225,'akash','nalgonda');
+insert into customer values(226,'sai','karimnagar');
+insert into customer values(227,'srikanth','hyd');
+insert into customer values(228,'paramesh','khammam');
+insert into customer values(229,'raju','kamareddy');
+insert into customer values(230,'santosh','hyd');
+
+-------------------------
+
+Orders Table:-
+
+CREATE TABLE Orders (
+OrderID number NOT NULL,
+OrderNumber number NOT NULL UNIQUE,
+customerId number,
+PRIMARY KEY (OrderID),
+CONSTRAINT FK_CustomerOrder FOREIGN KEY (customerId)
+REFERENCES customer(customerId),
+OrderLocation varchar(255) DEFAULT 'Hyderabad',
+CHECK (OrderId>=210)
+);
+
+
+alter table Orders modify OrderLocation DEFAULT 'BASAR';
+
+INSERT INTO Orders(ORDERID,ORDERNUMBER, customerId) Values(278,900,228);
+
+===================================================================================
